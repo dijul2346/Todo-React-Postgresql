@@ -54,7 +54,7 @@ app.post("/signin",function(req,res){
 app.post("/todos",function(req,res){
     const token=req.headers.token;
     const title=req.body.title;
-    const {userId,userName}=jwt.verify(token,"123random");
+    const {userId,userName}=jwt.verify(token,process.env.JWT_KEY);
     const user=prisma.user.findUnique({
         where:{
             userName:userName,
@@ -76,7 +76,7 @@ app.post("/todos",function(req,res){
 
 app.get("/todos",function(req,res){
     const token=req.headers.token;
-    const {userId,userName}=jwt.verify(token,"123random");
+    const {userId,userName}=jwt.verify(token,process.env.JWT_KEY);
     const user=prisma.user.findUnique({
         where:{
             userName:userName,
@@ -95,7 +95,7 @@ app.get("/todos",function(req,res){
 app.delete("/todo/:id",function(req,res){
     const token=req.headers.token;
     const todoId=Number(req.params.id);
-    const {userId,userName}=jwt.verify(token,"123random");
+    const {userId,userName}=jwt.verify(token,process.env.JWT_KEY);
     const user=prisma.user.findUnique({
         where:{
             userName:userName,
